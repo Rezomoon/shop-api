@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'treebeard' ,
     'django_filters',     
     'channels',
+
+    'shopApi.apps.catalog',
 ]
 
 MIDDLEWARE = [
@@ -75,17 +77,41 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'shopApi.wsgi.application'
+# WSGI_APPLICATION = 'shopApi.wsgi.application'
+ASGI_APPLICATION = 'shopApi.asgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+import os
 
+
+from dotenv import load_dotenv # Its for reading data from .env files
+load_dotenv()
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+    'default' : {
+        'ENGINE' :  'django.db.backends.postgresql', 
+        'NAME'  :   os.getenv("DB_NAME" , ) ,      # DataBAse Name in PostgresDB
+        'USER'  :   os.getenv("DB_USER" ,) ,      # Postgres User Name
+        'PASSWORD'  :   os.getenv("DB_PASSWORD" , ) , # We  set this when we install th sql
+        'HOST'  :   os.getenv("DB_HOST"),       # or 127.0.0.1
+        'PORT'  : os.getenv("DB_PORT"),         #  we set this in PostgresSql
+
+
+        # 'CONN_MAX_AGE': 600,  # 10 minutes connection persistence
+        # 'OPTIONS': {
+        #     'client_encoding': 'UTF8',
+        #     'timezone': 'Asia/Tehran',
+        # },
+        # 'TEST': {
+        #     'NAME': 'test_' + os.getenv('DB_NAME', 'mydjangodb'),
+        # },
     }
+    
 }
 
 
