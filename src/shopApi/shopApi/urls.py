@@ -15,8 +15,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path , include
 
+cat_back_url = [
+    path("api/back/catalog/" , include(("shopApi.apps.catalog.urls.back_urls" , "shopApi.apps.catalog") , namespace = "catalog-admin"))
+    ]
+
+cat_front_url = [
+    path("api/front/catalog/" , include(("shopApi.apps.catalog.urls.front_urls" , "shopApi.apps.catalog") , namespace = "catalog-front"))
+    ]
+    
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+] + cat_back_url + cat_front_url
