@@ -3,10 +3,9 @@ from shopApi.apps.catalog.models import Category
 from shopApi.apps.catalog.serializers.front_ser import CategorySerializer
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet) :
    
-    queryset            = Category.objects.all
+    queryset            = Category.objects.all()
     serializer_class    = CategorySerializer
 
-    def get_queryset(self):
-        return Category.objects.filter(is_public=True)
-    
+    # def get_queryset(self):
+    #     return Category.objects.filter(is_public=True)
    
