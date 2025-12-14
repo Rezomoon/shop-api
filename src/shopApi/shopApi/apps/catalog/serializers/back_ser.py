@@ -50,3 +50,9 @@ class CategoryNodeTreeSerializer(serializers.ModelSerializer) :
     class Meta : 
         model = Category
         fields = "__all__"
+
+class CategoryModificationSerializer(serializers.ModelSerializer) :
+    # Behtar hastesh k baraye har yek az action ha yek serializer besazim ta taghirate badi ra rahat tar beshavad emal kard !
+    class Meta :
+        model = Category
+        fields = ("title" , "describtion", "is_public")
