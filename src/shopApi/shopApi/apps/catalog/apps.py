@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class CatalogConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'shopApi.apps.catalog' #Bayad Masir Asli ro Behesh behdim !
+    name = 'shopApi.apps.catalog' # Bayad Masir Asli ro Behesh behdim !
