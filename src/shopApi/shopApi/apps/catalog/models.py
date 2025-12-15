@@ -25,3 +25,26 @@ class Category(MP_Node):
 
         verbose_name        = "Category"
         verbose_name_plural = "Categories"
+
+class OptionGroup(models.Model) :
+
+    title   = models.CharField(max_length=255 , db_index=True)
+    
+    def __str__(self):
+        return self.title
+    class Meta : 
+        verbose_name        = "Option Group"
+        verbose_name_plural = "Option Groups"
+
+
+class OptionGroupValue(models.Model) :
+
+    title   = models.CharField(max_length=255 , db_index=True)
+
+    group   = models.ForeignKey(OptionGroup , on_delete=models.CASCADE) # Rabete YEk B Chand Ba OptionGroup
+    
+    def __str__(self):
+        return self.title
+    class Meta : 
+        verbose_name        = "Option Group Value"
+        verbose_name_plural = "Option Group Values"
