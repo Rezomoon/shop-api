@@ -58,17 +58,21 @@ class ProductClass(models.Model) :
 
     track_stock = models.BooleanField(default=True)
     
-    options      = models.ManyToManyField('option'  ) # Chon Payeen tar class Option Tarif Shodeh ast bayad Toye qouttaion tarif Shavad 
+    options      = models.ManyToManyField('option' , blank=True  ) # Chon Payeen tar class Option Tarif Shodeh ast bayad Toye qouttaion tarif Shavad 
 
     # ersal lazem dare ya na
     require_shipping = models.BooleanField(default=True)
 
+
+   # @property => ba in mishe k az func zir b onvane yek prorty va field estefadeh kard masalan dar django Admin
     def has_attribute(self ) :
         return self.attributes.exists()
-    
+    def __str__(self):
+        return self.title
     class Meta : 
         verbose_name        = "Product"
         verbose_name_plural = "Products"
+
 
 
 
