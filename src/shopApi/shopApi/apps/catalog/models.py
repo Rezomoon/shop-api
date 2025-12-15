@@ -10,7 +10,7 @@ class Category(MP_Node):
     # null=> Yani baraye dataBAse ghabele ghabol mishe k khali bashad
     # blank => Yani django form Ghabol bokone khali vared shodane etelaat ro (input data Mitone Khali Bashe !)
     is_public   = models.BooleanField(default=True)
-    slug        = models.SlugField()
+    slug        = models.SlugField(unique= True , allow_unicode=True)
 
 
     objects     = CategoryQuerySet.as_manager()
@@ -48,3 +48,15 @@ class OptionGroupValue(models.Model) :
     class Meta : 
         verbose_name        = "Option Group Value"
         verbose_name_plural = "Option Group Values"
+
+
+class ProductClass(models.Model) :
+
+    title       = models.CharField(max_length=255 ,db_index=True)
+    slug        = models.SlugField(unique= True , allow_unicode=True)
+    describtion = models.CharField(max_length=2048 , null=True , blank=True)  
+
+    track_stock = models.BooleanField(default=True)
+
+    # ersal lazem dare ya na
+    require_shipping = models.BooleanField(default=True)
