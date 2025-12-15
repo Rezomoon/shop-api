@@ -28,3 +28,7 @@ cat_front_url = [
 urlpatterns = [
     path('admin/', admin.site.urls),
 ] + cat_back_url + cat_front_url
+
+# Inja mikhayeem neshon bedim k chejori mishe yek seri taghirat ro dar Admin PAnel  Django ijad kard 
+admin.site.site_title   =   "Shop API" 
+admin.site.site_header  =   "Shop API"
