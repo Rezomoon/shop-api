@@ -131,5 +131,5 @@ class Product(models.Model) :
     meta_title  =  models.CharField(max_length=128 , null=  True , blank= True)     #ITs For SEO
     meta_discription = models.TextField(null= True , blank=True)
     class Meta : 
-        verbose_name        = "Option"
-        verbose_name_plural = "Options"
+        verbose_name        = "Product"
+        verbose_name_plural = "Products"
