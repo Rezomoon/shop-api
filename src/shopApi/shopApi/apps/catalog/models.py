@@ -1,6 +1,7 @@
 from django.db import models
 from treebeard.mp_tree import MP_Node
 from .managers import CategoryQuerySet
+from shopApi.libs.db.fields import UpperCaseCharField
 
 # Create your models here.
 
@@ -106,6 +107,29 @@ class Option(models.Model) :
     type            = models.CharField(max_length = 16    , choices = OptionTypeChoice.choices , default = OptionTypeChoice.text)
     option_group    = models.ForeignKey(OptionGroup     , on_delete=models.PROTECT , null = True , blank=True)  # Ba PROTECT ejazeh Hazf dadeh nemishavad
     required        = models.BooleanField(default=False)
+    class Meta : 
+        verbose_name        = "Option"
+        verbose_name_plural = "Options"
+
+
+class Product(models.Model) :
+
+    class ProductTypeChoice(models.TextChoices): # in baraye ine k befahmim strucure chie Yani aya az in product faghat yek noo mashool hastesh ya chandin zir majmooe Dare
+        standalone  = "standalone"
+        parent      = "parent"
+        child       = "child"
+    structure   = models.CharField(max_length=20 , choices=ProductTypeChoice.choices , default=ProductTypeChoice.standalone)
+    parent      = models.ForeignKey("self" , related_name="children", on_delete=models.CASCADE , null = True , blank=True) # attribute children
+    title       = models.CharField(max_length=128 ,  null = True , blank=True)
+
+
+    # Custom Field : Vaghtie k ma mikhayeem field mokhtase khodemoon ro dashte bashim
+    upc         = UpperCaseCharField(max_length=14 , unique=True,null   = True ,  blank=True) # universal product code => globaly unique code for All Products
+
+    is_public   = models.BooleanField(default=True)
+    slug        = models.SlugField(unique= True , allow_unicode=True)
+    meta_title  =  models.CharField(max_length=128 , null=  True , blank= True)     #ITs For SEO
+    meta_discription = models.TextField(null= True , blank=True)
     class Meta : 
         verbose_name        = "Option"
         verbose_name_plural = "Options"
