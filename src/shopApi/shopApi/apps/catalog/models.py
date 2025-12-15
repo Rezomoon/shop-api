@@ -57,6 +57,8 @@ class ProductClass(models.Model) :
     describtion = models.CharField(max_length=2048 , null=True , blank=True)  
 
     track_stock = models.BooleanField(default=True)
+    
+    options      = models.ManyToManyField('option'  ) # Chon Payeen tar class Option Tarif Shodeh ast bayad Toye qouttaion tarif Shavad 
 
     # ersal lazem dare ya na
     require_shipping = models.BooleanField(default=True)
@@ -68,7 +70,7 @@ class ProductClass(models.Model) :
         verbose_name        = "Product"
         verbose_name_plural = "Products"
 
-        
+
 
 class ProductAttribute(models.Model) : 
 
@@ -83,3 +85,23 @@ class ProductAttribute(models.Model) :
     option_group    = models.ForeignKey(OptionGroup     , on_delete=models.PROTECT , null = True , blank=True)  # Ba PROTECT ejazeh Hazf dadeh nemishavad 
     product_class   = models.ForeignKey(ProductClass    , on_delete=models.CASCADE , null =True, related_name= "attributes")               # Rabte yek b chand 
     required        = models.BooleanField(default=False)
+    class Meta : 
+        verbose_name        = "Product Attribute"
+        verbose_name_plural = "Product Attributes"
+
+
+class Option(models.Model) : 
+
+    class OptionTypeChoice(models.TextChoices) :
+        text    = "text" 
+        integer = "integer"
+        float   = "float"
+        option  = "option"
+        multi_option    = "multi_option"
+    title           = models.CharField(max_length=64)
+    type            = models.CharField(max_length = 16    , choices = OptionTypeChoice.choices , default = OptionTypeChoice.text)
+    option_group    = models.ForeignKey(OptionGroup     , on_delete=models.PROTECT , null = True , blank=True)  # Ba PROTECT ejazeh Hazf dadeh nemishavad
+    required        = models.BooleanField(default=False)
+    class Meta : 
+        verbose_name        = "Option"
+        verbose_name_plural = "Options"
