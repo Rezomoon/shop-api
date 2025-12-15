@@ -60,3 +60,26 @@ class ProductClass(models.Model) :
 
     # ersal lazem dare ya na
     require_shipping = models.BooleanField(default=True)
+
+    def has_attribute(self ) :
+        return self.attributes.exists()
+    
+    class Meta : 
+        verbose_name        = "Product"
+        verbose_name_plural = "Products"
+
+        
+
+class ProductAttribute(models.Model) : 
+
+    class AttributeTypeChoice(models.TextChoices) :
+        text    = "text" 
+        integer = "integer"
+        float   = "float"
+        option  = "option"
+        multi_option    = "multi_option"
+    title           = models.CharField(max_length=64)
+    type            = models.CharField(max_length=16    , choices=AttributeTypeChoice.choices , default=AttributeTypeChoice.text)
+    option_group    = models.ForeignKey(OptionGroup     , on_delete=models.PROTECT , null = True , blank=True)  # Ba PROTECT ejazeh Hazf dadeh nemishavad 
+    product_class   = models.ForeignKey(ProductClass    , on_delete=models.CASCADE , null =True, related_name= "attributes")               # Rabte yek b chand 
+    required        = models.BooleanField(default=False)
