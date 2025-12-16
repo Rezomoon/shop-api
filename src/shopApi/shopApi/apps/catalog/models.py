@@ -130,6 +130,33 @@ class Product(models.Model) :
     slug        = models.SlugField(unique= True , allow_unicode=True)
     meta_title  =  models.CharField(max_length=128 , null=  True , blank= True)     #ITs For SEO
     meta_discription = models.TextField(null= True , blank=True)
+
+    product_class   = models.ForeignKey(ProductClass , on_delete= models.PROTECT , null= True , blank= True , related_name="products") # attributee k az productClass Gharare bereseh=> related_name 
+
+
+    # Chon Ma yek Rabeteh Many to Many Darim va django b sorate default dare yek tablee mojaza baraye data haye ma misaze
+    # vali chon ma data haye dige iyee mikhahim b oon table ezafe h konim bayad b sorate zir amal konim through = ProductAttributeValue
+    # Yani ma darim b django migim k in rabeteh many to many ro az tariq in jadval manage kon
+    attributes      = models.ManyToManyField(ProductAttribute , through="ProductAttributeValue")
+
+
     class Meta : 
         verbose_name        = "Product"
         verbose_name_plural = "Products"
+
+# Tabeli k b jaye table default django sakhte mishavad 
+class ProductAttributeValue(models.Model) : 
+    product     = models.ForeignKey(Product , on_delete=models.CASCADE)
+    attribute   = models.ForeignKey(ProductAttribute , on_delete=models.CASCADE)
+
+    value_text      = models.TextField(null = True , blank = True)
+    value_integer   = models.IntegerField(null = True , blank = True)
+    value_float     = models.FloatField(null = True , blank=True)
+    value_option    = models.ForeignKey(OptionGroupValue , on_delete=models.PROTECT)
+    value_multi_option  = models.ManyToManyField(OptionGroupValue)
+
+
+    class Meta : 
+        verbose_name        = "Product"
+        verbose_name_plural = "Products"
+        unique_together     = ("product" , "attribute")
