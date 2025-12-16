@@ -153,7 +153,7 @@ class ProductAttributeValue(models.Model) :
     value_integer   = models.IntegerField(null = True , blank = True)
     value_float     = models.FloatField(null = True , blank=True)
     value_option    = models.ForeignKey(OptionGroupValue , on_delete=models.PROTECT)
-    value_multi_option  = models.ManyToManyField(OptionGroupValue)
+    value_multi_option  = models.ManyToManyField(OptionGroupValue)    
 
 
     class Meta : 
