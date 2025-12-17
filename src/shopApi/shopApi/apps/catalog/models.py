@@ -138,6 +138,8 @@ class Product(models.Model) :
     # vali chon ma data haye dige iyee mikhahim b oon table ezafe h konim bayad b sorate zir amal konim through = ProductAttributeValue
     # Yani ma darim b django migim k in rabeteh many to many ro az tariq in jadval manage kon
     attributes      = models.ManyToManyField(ProductAttribute , through="ProductAttributeValue")
+    recommended_products    = models.ManyToManyField("catalog.Product" , through="ProductRecommendation" , blank= True) # chon ProductRecommendation Class payeen Tarif Shode Dar Qoutetion mizarimesh
+
 
 
     class Meta : 
@@ -155,8 +157,7 @@ class ProductAttributeValue(models.Model) :
 
     value_option            = models.ForeignKey(OptionGroupValue , on_delete=models.PROTECT , null= True , blank=True)
     value_multi_option      = models.ManyToManyField(OptionGroupValue , blank=True,related_name="multi_valued_attribute_value")    
-    recommended_products    = models.ManyToManyField("catalog.Product" , through="ProductRecommendation" , blank= True) # chon ProductRecommendation Class payeen Tarif Shode Dar Qoutetion mizarimesh
-
+    
 
     class Meta : 
         verbose_name        = "Product"
