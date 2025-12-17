@@ -1,5 +1,5 @@
 from django.db import models
-
+import hashlib
 # Create your models here.
 
 
@@ -26,4 +26,9 @@ class Image(models.Model) :
     def save(self, *args , **kwargs):
 
         self.file_size = self.image.size
+
+        hasher = hashlib.sha1()
+        for chunk in self.image.file.chunks() : 
+            hasher.update(chunk)
+        self.file_hash = hasher.digest()
         return super().save(*args , **kwargs)
