@@ -12,8 +12,8 @@ class Image(models.Model) :
     width   = models.IntegerField(editable=False)
     height  = models.IntegerField(editable=False)
 
-    file_hash = models.CharField(max_length=40 , db_index=True)
-    file_size = models.PositiveIntegerField(null=True)
+    file_hash = models.CharField(max_length=40 , db_index=True , editable=False)
+    file_size = models.PositiveIntegerField(null=True , editable=False)
 
 
     # Focal Point B ONvane Yek Noghte Kanonie Ax Ham mitonim begirim 
@@ -30,5 +30,5 @@ class Image(models.Model) :
         hasher = hashlib.sha1()
         for chunk in self.image.file.chunks() : 
             hasher.update(chunk)
-        self.file_hash = hasher.digest()
+        self.file_hash = hasher.hexdigest()
         return super().save(*args , **kwargs)
