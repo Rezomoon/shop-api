@@ -152,11 +152,25 @@ class ProductAttributeValue(models.Model) :
     value_text      = models.TextField(null = True , blank = True)
     value_integer   = models.IntegerField(null = True , blank = True)
     value_float     = models.FloatField(null = True , blank=True)
-    value_option    = models.ForeignKey(OptionGroupValue , on_delete=models.PROTECT)
-    value_multi_option  = models.ManyToManyField(OptionGroupValue)    
+
+    value_option            = models.ForeignKey(OptionGroupValue , on_delete=models.PROTECT , null= True , blank=True)
+    value_multi_option      = models.ManyToManyField(OptionGroupValue , blank=True,related_name="multi_valued_attribute_value")    
+    recommended_products    = models.ManyToManyField("catalog.Product" , through="ProductRecommendation" , blank= True) # chon ProductRecommendation Class payeen Tarif Shode Dar Qoutetion mizarimesh
 
 
     class Meta : 
         verbose_name        = "Product"
         verbose_name_plural = "Products"
         unique_together     = ("product" , "attribute")
+
+class ProductRecommendation(models.Model) : 
+    # JADVALE VASET
+
+    primary         = models.ForeignKey(Product , on_delete=models.CASCADE , related_name= "primary_recommendation")
+    recommendation  = models.ForeignKey(Product , on_delete=models.CASCADE)
+
+    # Ta in Bala Default Table khode Django mishe
+    rank            = models.PositiveSmallIntegerField(default=0)
+    class Meta      :
+        unique_together     = ("primary" , "recommendation")
+        ordering            = ("primary","-rank")
