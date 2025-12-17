@@ -61,7 +61,6 @@ coverage.xml
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-media/
 staticfiles/         # اگر از collectstatic استفاده کردی ممکنه لازم نباشه؛ توضیح پایین.
 # اگر از collectstatic در سرور استفاده می‌کنی، ممکنه نخواهی staticfiles/ را ignore کنی — تصمیم با توست.
 
