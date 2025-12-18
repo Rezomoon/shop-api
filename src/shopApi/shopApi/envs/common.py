@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # apps : 
     # Olaviate gharar gereftane app ha moheme ama dar in proje niaz nist
     # va dar hengame override kardan niaz mishe 
+    'shopApi.apps.analytics' , 
     'shopApi.apps.media' ,
     'shopApi.apps.catalog' ,
 ]
