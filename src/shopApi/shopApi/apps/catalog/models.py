@@ -1,6 +1,7 @@
 from django.db import models
 from treebeard.mp_tree import MP_Node
 from .managers import CategoryQuerySet
+from shopApi.libs.db.models import AuditableModel
 from shopApi.libs.db.fields import UpperCaseCharField
 
 # Create your models here.
@@ -112,7 +113,7 @@ class Option(models.Model) :
         verbose_name_plural = "Options"
 
 
-class Product(models.Model) :
+class Product(AuditableModel) :
 
     class ProductTypeChoice(models.TextChoices): # in baraye ine k befahmim strucure chie Yani aya az in product faghat yek noo mashool hastesh ya chandin zir majmooe Dare
         standalone  = "standalone"
