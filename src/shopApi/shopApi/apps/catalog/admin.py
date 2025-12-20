@@ -1,7 +1,7 @@
 from django.contrib import admin
 from treebeard.admin import TreeAdmin
 from treebeard.forms import movenodeform_factory
-from .models import Category , ProductClass , Option , ProductAttribute , OptionGroup
+from .models import Category , ProductClass , Option , ProductAttribute , OptionGroup , Product
 
 # Register your models here.
 
@@ -66,6 +66,7 @@ class ProductClassAdminModel(admin.ModelAdmin) :
 
 
 
+
 # TOZIH  :
 #  In 2 ghate code dar vaghe har 2 yek kar ra anjam midahand 
 # 1:
@@ -74,3 +75,13 @@ class ProductClassAdminModel(admin.ModelAdmin) :
 #     pass    
 # 2 :
 # admin.site.register(ProductClass ,)
+
+
+
+
+
+
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin) : 
+    pass   
