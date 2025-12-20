@@ -30,7 +30,7 @@ cat_front_url = [
     ]
     
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls), 
 ] + cat_back_url + cat_front_url
 
 if settings.DEBUG :

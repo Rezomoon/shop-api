@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'drf_spectacular',
+   
     'corsheaders',
     'treebeard' ,
     'django_filters',     
@@ -47,10 +49,12 @@ INSTALLED_APPS = [
     # apps : 
     # Olaviate gharar gereftane app ha moheme ama dar in proje niaz nist
     # va dar hengame override kardan niaz mishe 
+    'shopApi.auth.users' ,
     'shopApi.apps.inventory' , 
     'shopApi.apps.analytics' , 
     'shopApi.apps.media' ,
     'shopApi.apps.catalog' ,
+    'rest_framework.authtoken' , 
 ]
 
 MIDDLEWARE = [
@@ -162,3 +166,15 @@ MEDIA_URL   = "media/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+AUTH_USER_MODEL = "users.User"
+
+
+REST_FRAMEWORK = {
+    # YOUR SETTINGS
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
