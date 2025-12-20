@@ -44,7 +44,13 @@ INSTALLED_APPS = [
     'django_filters',     
     'channels',
 
-    'shopApi.apps.catalog',
+    # apps : 
+    # Olaviate gharar gereftane app ha moheme ama dar in proje niaz nist
+    # va dar hengame override kardan niaz mishe 
+    'shopApi.apps.inventory' , 
+    'shopApi.apps.analytics' , 
+    'shopApi.apps.media' ,
+    'shopApi.apps.catalog' ,
 ]
 
 MIDDLEWARE = [
@@ -95,8 +101,8 @@ DATABASES = {
     # }
     'default' : {
         'ENGINE' :  'django.db.backends.postgresql', 
-        'NAME'  :   os.getenv("DB_NAME" , ) ,      # DataBAse Name in PostgresDB
-        'USER'  :   os.getenv("DB_USER" ,) ,      # Postgres User Name
+        'NAME'  :   os.getenv("DB_NAME" ) ,      # DataBAse Name in PostgresDB
+        'USER'  :   os.getenv("DB_USER" ) ,      # Postgres User Name
         'PASSWORD'  :   os.getenv("DB_PASSWORD" , ) , # We  set this when we install th sql
         'HOST'  :   os.getenv("DB_HOST"),       # or 127.0.0.1
         'PORT'  : os.getenv("DB_PORT"),         #  we set this in PostgresSql
@@ -149,8 +155,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-
+STATIC_URL  = 'static/'
+MEDIA_ROOT  = "/vol/web/media/"
+MEDIA_URL   = "media/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

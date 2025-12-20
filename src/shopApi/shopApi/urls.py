@@ -16,6 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path , include
+from django.conf import settings
+from django.conf.urls.static import static
+
+#   #
 
 cat_back_url = [
     path("api/back/catalog/" , include(("shopApi.apps.catalog.urls.back_urls" , "shopApi.apps.catalog") , namespace = "catalog-admin"))
@@ -28,6 +32,9 @@ cat_front_url = [
 urlpatterns = [
     path('admin/', admin.site.urls),
 ] + cat_back_url + cat_front_url
+
+if settings.DEBUG :
+    urlpatterns += static(settings.MEDIA_URL , document_root = settings.MEDIA_ROOT)
 
 # Inja mikhayeem neshon bedim k chejori mishe yek seri taghirat ro dar Admin PAnel  Django ijad kard 
 admin.site.site_title   =   "Shop API" 

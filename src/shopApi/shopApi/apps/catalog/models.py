@@ -1,6 +1,7 @@
 from django.db import models
 from treebeard.mp_tree import MP_Node
 from .managers import CategoryQuerySet
+from shopApi.libs.db.models import AuditableModel
 from shopApi.libs.db.fields import UpperCaseCharField
 
 # Create your models here.
@@ -112,7 +113,7 @@ class Option(models.Model) :
         verbose_name_plural = "Options"
 
 
-class Product(models.Model) :
+class Product(AuditableModel) :
 
     class ProductTypeChoice(models.TextChoices): # in baraye ine k befahmim strucure chie Yani aya az in product faghat yek noo mashool hastesh ya chandin zir majmooe Dare
         standalone  = "standalone"
@@ -138,6 +139,15 @@ class Product(models.Model) :
     # vali chon ma data haye dige iyee mikhahim b oon table ezafe h konim bayad b sorate zir amal konim through = ProductAttributeValue
     # Yani ma darim b django migim k in rabeteh many to many ro az tariq in jadval manage kon
     attributes      = models.ManyToManyField(ProductAttribute , through="ProductAttributeValue")
+    recommended_products    = models.ManyToManyField("catalog.Product" , through="ProductRecommendation" , blank= True) # chon ProductRecommendation Class payeen Tarif Shode Dar Qoutetion mizarimesh
+
+    @ property
+    def main_image(self ) : 
+        if self.images.exist() : 
+            return self.images.first()
+        else : 
+            return None
+
 
 
     class Meta : 
@@ -153,10 +163,39 @@ class ProductAttributeValue(models.Model) :
     value_integer   = models.IntegerField(null = True , blank = True)
     value_float     = models.FloatField(null = True , blank=True)
 
-    value_option    = models.ForeignKey(OptionGroupValue , on_delete=models.PROTECT , null= True , blank=True)
-    value_multi_option  = models.ManyToManyField(OptionGroupValue , blank=True,related_name="multi_valued_attribute_value")    
+    value_option            = models.ForeignKey(OptionGroupValue , on_delete=models.PROTECT , null= True , blank=True)
+    value_multi_option      = models.ManyToManyField(OptionGroupValue , blank=True,related_name="multi_valued_attribute_value")    
+    
 
     class Meta : 
         verbose_name        = "Product"
         verbose_name_plural = "Products"
         unique_together     = ("product" , "attribute")
+
+class ProductRecommendation(models.Model) : 
+    # JADVALE VASET
+
+    primary         = models.ForeignKey(Product , on_delete=models.CASCADE , related_name= "primary_recommendation")
+    recommendation  = models.ForeignKey(Product , on_delete=models.CASCADE)
+
+    # Ta in Bala Default Table khode Django mishe
+    rank            = models.PositiveSmallIntegerField(default=0)
+    class Meta      :
+        unique_together     = ("primary" , "recommendation")
+        ordering            = ("primary","-rank")
+    
+class ProductImage(models.Model) : 
+    product  = models.ForeignKey(Product , on_delete=models.CASCADE , related_name="images")
+    image    = models.ForeignKey("media.Image" , on_delete=models.PROTECT)
+    
+    display_order = models.PositiveIntegerField(default=0)
+    class Meta:
+        ordering = ("display_order" , ) # user Tupple is better than list 
+
+    def delete(self, *ars ,  **kwargs):
+
+        super().delete( *args , **kwargs)
+
+        for index , image in enumerate(self.product.images.all())  : # enumerate ba itrate kardan 2 khoroji midahad ham item va ham index ro
+            image.display_order =   index
+            image.save() 
