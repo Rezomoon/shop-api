@@ -127,9 +127,9 @@ class Product(AuditableModel) :
     # Custom Field : Vaghtie k ma mikhayeem field mokhtase khodemoon ro dashte bashim
     upc         = UpperCaseCharField(max_length=14 , unique=True,null   = True ,  blank=True) # universal product code => globaly unique code for All Products
 
-    is_public   = models.BooleanField(default=True)
-    slug        = models.SlugField(unique= True , allow_unicode=True)
-    meta_title  =  models.CharField(max_length=128 , null=  True , blank= True)     #ITs For SEO
+    is_public       = models.BooleanField(default=True)
+    slug            = models.SlugField(unique= True , allow_unicode=True)
+    meta_title      =  models.CharField(max_length=128 , null=  True , blank= True)     #ITs For SEO
     meta_discription = models.TextField(null= True , blank=True)
 
     product_class   = models.ForeignKey(ProductClass , on_delete= models.PROTECT , null= True , blank= True , related_name="products") # attributee k az productClass Gharare bereseh=> related_name 
