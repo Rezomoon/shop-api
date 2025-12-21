@@ -10,7 +10,7 @@ from django.conf import settings
 class AuditableModel(models.Model) : 
     # Ba in kar va ba estefadeh az => abstract = True yek code DRY neveshte mishe Dont Repeat Yourself
     # Yani Dar Table Product va baghile model ha va class ha ezafeh mishavad in field ha
-    # va Digar niaz b tekrare amha nist .
+    # va Digar niaz b tekrare amha nist .(Dar Kol behtarin entekhab baraye emale field haye moshtarak)
     # Nemoneh iyee az in model ha :
 # TimeStampedModel
 # PublishableModel
